@@ -1,0 +1,29 @@
+***BIBLIOTECAS_USADAS***
+    - requests
+    - dotenv
+    - streamlit
+    - bibliotecas de DB
+************************
+
+"headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+    "Accept": "application/json",
+    "Authorization": "Bearer {jwt_token}"
+}"
+    - headers da requisição, já com meu token de autorização, muitos lugares ainda se referem como "auth_token", mas é o "jwt_token"
+
+"https://www.duolingo.com/2017-06-30/friends/users/1116358058/followers?pageSize=500&viewerId=1116358058&_={tls_token}"
+    - Url para obter a lista de followers de um usuário, contém meu id, e meu user_id
+
+"https://www.duolingo.com/users/Thalys187940"
+    - Url para pesquisa do usuário, o usuário é retornado como "username"
+
+"requests.get(url, headers=headers)"
+    - padrão das resquisições de usuário, ao fim adiciono .json() para formatação correta da response
+
+"requests.get("https://www.duolingo.com/users/Thalys187940").json()['avatar']"
+    - A consulta de um usuário não dará o 'user_id' se você não estiver consultando seu próprio usuário, mas o user_id está no url contido em 'avatar'
+
+*Pacotes instalados com o Streamlit*
+pytz, watchdog, tzdata, typing-extensions, tornado, toml, tenacity, smmap, six, rpds-py, pygments, pyarrow, protobuf, pillow, packaging, numpy, narwhals, mdurl, MarkupSafe, colorama, cachetools, blinker, attrs, referencing, python-dateutil, markdown-it-py, jinja2, gitdb, click, rich, pydeck, pandas, jsonschema-specifications, gitpython, jsonschema, altair, streamlit
+************************************
