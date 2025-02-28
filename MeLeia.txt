@@ -1,6 +1,5 @@
 ***BIBLIOTECAS_USADAS***
     - requests
-    - dotenv
     - streamlit
     - bibliotecas de DB
 ************************
