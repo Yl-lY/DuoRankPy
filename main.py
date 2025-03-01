@@ -10,6 +10,9 @@ page_icon = 'https://techcrunch.com/wp-content/uploads/2025/01/duolingo-owl.png'
 st.set_page_config(page_title='Duolingo Rank', page_icon=page_icon, layout="centered")
 st.title("Ranking de Competidores 🏆")
 
+linguas = func.collect_languages()
+print(len(linguas))
+
 carregar = save.pegar_competidores()
 competitors = carregar
 
@@ -29,8 +32,10 @@ if st.button("Atualizar Rank"):
 # competitors = func.get_competitors()
 
 if competitors:
-    df = pd.DataFrame(competitors, columns=["Nome", "Avatar", "Display Name", "Lingua", "XP", "STREAK"])
+    df = pd.DataFrame(competitors, columns=save.cabecalho)
     
+    # df['Lingua'] = df["Lingua"].apply(lambda x: f'<image src="{func.get_bandeiras(x)}" width="20"> ')
+
     st.dataframe(
         df.sort_values(by="XP", key=lambda x: x.astype(int), ascending=False),
         column_config={
@@ -48,7 +53,11 @@ if competitors:
                 label="Nickname",
                 help="Nome exibido",
             ),
-            "Língua": "Idioma",
+            "Bandeira": st.column_config.ImageColumn(
+                label='',
+                width='small'
+            ),
+            "Idioma": "Idioma",
             "XP": st.column_config.NumberColumn(
                 label="⭐️Experiência",
                 help="Experiência na lingua escolhida"

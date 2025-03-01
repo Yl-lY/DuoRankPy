@@ -4,7 +4,7 @@ import os
 
 local_save = 'rank_competidores.csv'
 exist = os.path.isfile(local_save)
-cabecalho = ["Nome", "Avatar", "Display Name", "Lingua", "XP", "STREAK"]
+cabecalho = ["Nome", "Avatar", "Display Name", "Bandeira", "Idioma", "XP", "STREAK"]
 
 def adicionar_na_lista(user, lang):
     data = func.collect_user_data(user)
@@ -17,6 +17,7 @@ def adicionar_na_lista(user, lang):
     avatar_url = 'https:' + data['avatar'] + '/xlarge'
     xp = '0'
     streak = data['site_streak']
+    icon_language = func.get_bandeiras(lang)
 
     for i in data['languages']:
         if i['learning'] == False:
@@ -40,7 +41,7 @@ def adicionar_na_lista(user, lang):
             csv_writer = csv.writer(arquivo, delimiter=';')
             if not exist:
                 csv_writer.writerow(cabecalho)
-            csv_writer.writerow([user, avatar_url, display_name, lang, xp, streak])
+            csv_writer.writerow([user, avatar_url, display_name, icon_language, lang, xp, streak])
         return True
     
     return False
