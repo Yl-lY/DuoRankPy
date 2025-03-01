@@ -28,7 +28,7 @@ def collect_user_friends(user_id):
     response = requests.get(f"https://www.duolingo.com/2017-06-30/friends/users/{user_id}/followers?pageSize=500&viewerId={user_id}&_={os.getenv("TLS_TOKEN")}", headers=headers).json()
     return response
 
-def include_competitor(user_name, language):
+def include_competitor_db(user_name, language):
     
     data = collect_user_data(user_name)
 
@@ -62,7 +62,7 @@ def include_competitor(user_name, language):
     print(f'Usuário {user_name} salvo com sucesso')
     return True
 
-def get_competitors():
+def get_competitors_db():
     conn = connect_db()
     cursor = conn.cursor()
 
@@ -72,6 +72,16 @@ def get_competitors():
     conn.close()
     return competitors
     
+
+def include_competitor_local():
+    ...
+
+def get_competitors_local():
+    competitors = []
+    with open('rank_competidores.csv', 'r') as arquivo:
+        for linha in arquivo:
+            competitors.append(linha)
+    return competitors
 # def rank_competitors(competitors):
     
 #     return sorted(competitors.items(), key=lambda x: x[1][1], reverse=True)

@@ -3,7 +3,10 @@ venv/
 .env
 
 # Arquivos de configuração local
+*.sqlite3
 __pycache__/
+.DS_Store
+*.log
 
 # Credenciais sensíveis
 tokens.py
@@ -11,4 +14,9 @@ tokens.py
 # Arquivos de teste
 test.py
 
+# Arquivos de DB
+*.db
+*.sql
 
+# Antiga utilização de Banco de Dados
+database.py
