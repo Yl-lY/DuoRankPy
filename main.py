@@ -32,7 +32,7 @@ if competitors:
     df = pd.DataFrame(competitors, columns=["Nome", "Avatar", "Display Name", "Lingua", "XP", "STREAK"])
     
     st.dataframe(
-        df.sort_values(by="XP", ascending=False),
+        df.sort_values(by="XP", key=lambda x: x.astype(int), ascending=False),
         column_config={
             "Nome": st.column_config.TextColumn(
                 label="Nome",
