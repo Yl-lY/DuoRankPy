@@ -10,8 +10,7 @@ headers = {
     "Authorization": f"Bearer {os.getenv("JWL_TOKEN")}"
 }
 
-def get_bandeiras(x):
-    bandeiras = {
+bandeiras = {
         'Spanish': 'https://d35aaqx5ub95lt.cloudfront.net/vendor/59a90a2cedd48b751a8fd22014768fd7.svg',
         'French': 'https://d35aaqx5ub95lt.cloudfront.net/vendor/482fda142ee4abd728ebf4ccce5d3307.svg',
         'Japanese': 'https://d35aaqx5ub95lt.cloudfront.net/vendor/edea4fa18ff3e7d8c0282de3f102aaed.svg',
@@ -54,6 +53,7 @@ def get_bandeiras(x):
         'Yiddish': 'https://d35aaqx5ub95lt.cloudfront.net/vendor/55bad151fa6a8d9e2376fc9697c671c8.svg'
     }
 
+def get_bandeira(x):
     return bandeiras[x]
 
 def collect_languages():

@@ -17,7 +17,7 @@ def adicionar_na_lista(user, lang):
     avatar_url = 'https:' + data['avatar'] + '/xlarge'
     xp = '0'
     streak = data['site_streak']
-    icon_language = func.get_bandeiras(lang)
+    icon_language = func.get_bandeira(lang)
 
     for i in data['languages']:
         if i['learning'] == False:
