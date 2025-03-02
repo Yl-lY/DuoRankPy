@@ -34,8 +34,10 @@ with col3:
         if sucess:
             st.success(str(f"{username} Adicionado com sucesso!"), icon='✅')
             save.atualizar_rank()
+        elif sucess == None:
+            st.error(str(f'{username} não é um usuário válido!'), icon='❗️')
         else:
-            st.error(str(f"{username} já está na lista.."), icon='🤝🏽')
+            st.warning(str(f"{username} já está na lista.."), icon='🤝🏽')
 
     if st.button("Atualizar Rank"):
         if competitors != []:

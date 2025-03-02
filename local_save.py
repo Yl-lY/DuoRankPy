@@ -11,7 +11,7 @@ def adicionar_na_lista(user, lang):
 
     if data == None:
         print(f'Usuário {user} não encontrado')
-        return False
+        return None
     
     display_name = data['fullname']
     avatar_url = 'https:' + data['avatar'] + '/xlarge'
