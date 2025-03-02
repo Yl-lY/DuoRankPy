@@ -65,7 +65,6 @@ def collect_languages():
             continue
         linguas.append(i['learning_language_name'])
 
-    print(linguas)
     return linguas
 
 

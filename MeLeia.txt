@@ -23,6 +23,9 @@
 "requests.get("https://www.duolingo.com/users/Thalys187940").json()['avatar']"
     - A consulta de um usuário não dará o 'user_id' se você não estiver consultando seu próprio usuário, mas o user_id está no url contido em 'avatar'
 
+"https://www.duolingo.com/api/1/courses/list?_=1740862940188"
+    - Link para pegar a lista de cursos disponíveis
+
 *Pacotes instalados com o Streamlit*
 pytz, watchdog, tzdata, typing-extensions, tornado, toml, tenacity, smmap, six, rpds-py, pygments, pyarrow, protobuf, pillow, packaging, numpy, narwhals, mdurl, MarkupSafe, colorama, cachetools, blinker, attrs, referencing, python-dateutil, markdown-it-py, jinja2, gitdb, click, rich, pydeck, pandas, jsonschema-specifications, gitpython, jsonschema, altair, streamlit
 ************************************

@@ -11,7 +11,7 @@ st.set_page_config(page_title='Duolingo Rank', page_icon=page_icon, layout="wide
 
 
 linguas = func.collect_languages()
-print(len(linguas))
+
 
 carregar = save.pegar_competidores()
 competitors = carregar
