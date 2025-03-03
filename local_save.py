@@ -10,7 +10,6 @@ def adicionar_na_lista(user, lang):
     data = func.collect_user_data(user)
 
     if data == None:
-        # print(f'Usuário {user} não encontrado, ou língua')
         return None
     
     if lang == None:
@@ -58,20 +57,16 @@ def pegar_competidores():
                 continue
             lista_competidores.append(item)
 
-    # print(lista_competidores)
     return lista_competidores
 
 def atualizar_rank():
     competitors = pegar_competidores()
     for competitor in competitors:
-        # print(competitor[0])
         data = func.collect_user_data(competitor[0])
         for i in data['languages']:
             if i['language_string'] == competitor[4]:
                 competitor[5] = int(i['points'])
                 competitor[6] = int(data['last_streak']['length'])
-                # print(competitor)
-    print(competitors)
 
     with open('rank_competidores.csv', 'w', newline='') as arquivo:
         csv_writer = csv.writer(arquivo, delimiter=';')
