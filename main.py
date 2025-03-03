@@ -26,25 +26,28 @@ col1, col2, col3, = container.columns([1, 3, 1])
 
 
 with col1:
-    username = st.text_input('Nome do Participante', placeholder='Usuário')
+    username = st.text_input('Nome do Participante', label_visibility='collapsed', placeholder='Usuário')
     lingua = st.selectbox("Qual idioma escolhido?", list(func.bandeiras.keys()))
 with col3:
-    if st.button('Adicionar competidor'):
+    if st.button('Adicionar competidor', icon='➕'):
         sucess = save.adicionar_na_lista(username, lingua)
         if sucess:
-            st.success(str(f"{username} Adicionado com sucesso!"), icon='✅')
+            st.toast(str(f"{username} Adicionado com sucesso!"), icon='✅')
             save.atualizar_rank()
+            
         elif sucess == None:
-            st.error(str(f'{username} não é um usuário válido!'), icon='❗️')
+            st.toast(str(f'{username} não é um usuário válido!'), icon='❗️')
+            
         else:
-            st.warning(str(f"{username} já está na lista.."), icon='🤝🏽')
+            st.toast(str(f"{username} já está na lista.."), icon='🤝🏽')
+      
 
-    if st.button("Atualizar Rank"):
+    if st.button("Atualizar Rank", icon='🌐'):
         if competitors != []:
             save.atualizar_rank()
-            st.success("Lista atualizada!", icon='♻️')
+            st.toast("Lista atualizada!", icon='♻️')
         else:
-            st.error("Lista sem competidores..")
+            st.toast("Lista sem competidores..", icon='🫥')
 
 # competitors = func.get_competitors()
 with col2:
@@ -85,5 +88,8 @@ with col2:
         st.write("Nenhum competidor cadastrado.")
 
 if username:
-    st.info('Não confie no input, dar Enter não vai fazer nada..', icon='👀')
+    col1, col2, col3 = st.columns([4, 5, 4])
+    with col2:
+        st.info('Não confie no input, dar Enter não vai fazer nada..', icon='💡')
+
     
