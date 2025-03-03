@@ -9,12 +9,12 @@ cabecalho = ["Nome", "Avatar", "Display Name", "Bandeira", "Idioma", "XP", "STRE
 def adicionar_na_lista(user, lang):
     data = func.collect_user_data(user)
 
-    if lang == None:
-        return ''
-
     if data == None:
         # print(f'Usuário {user} não encontrado, ou língua')
         return None
+    
+    if lang == None:
+        return ''
     
     display_name = data['fullname']
     avatar_url = 'https:' + data['avatar'] + '/xlarge'
@@ -70,8 +70,8 @@ def atualizar_rank():
             if i['language_string'] == competitor[4]:
                 competitor[5] = int(i['points'])
                 competitor[6] = int(data['last_streak']['length'])
-                print(competitor)
-            
+                # print(competitor)
+    print(competitors)
 
     with open('rank_competidores.csv', 'w', newline='') as arquivo:
         csv_writer = csv.writer(arquivo, delimiter=';')

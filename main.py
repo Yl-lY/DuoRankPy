@@ -9,9 +9,7 @@ page_icon = 'https://techcrunch.com/wp-content/uploads/2025/01/duolingo-owl.png'
 
 st.set_page_config(page_title='Duolingo Rank', page_icon=page_icon, layout="wide")
 
-
 linguas = func.collect_languages()
-
 
 carregar = save.pegar_competidores()
 competitors = carregar
@@ -26,8 +24,6 @@ with coltitle:
 container = st.container()
 col1, col2, col3, = container.columns([1, 3, 1])
 
-
-
 with col1:
     username = st.text_input('Nome do Participante', label_visibility='collapsed', placeholder='Usuário')
     lingua = st.selectbox("Qual idioma escolhido?", list(func.bandeiras.keys()), placeholder='Du iu spiki inglix?', index=None)
@@ -37,8 +33,9 @@ with col3:
         if sucess == True:
             st.toast(str(f"{username} Adicionado com sucesso!"), icon='✅')
             save.atualizar_rank()
+            st.rerun()
         elif sucess == None:
-            st.toast(str(f'Usuário inválido ou Idioma não selecionado!'), icon='❗️')
+            st.toast(str(f'{username} não existe!'), icon='❗️')
         elif sucess == False:
             st.toast(str(f"{username} já está na lista.."), icon='🤝🏽')
         elif sucess == '':
@@ -48,6 +45,7 @@ with col3:
     if st.button("Atualizar Rank", icon='🌐'):
         if competitors != []:
             save.atualizar_rank()
+            st.rerun()
             st.toast("Lista atualizada!", icon='♻️')
         else:
             st.toast("Lista sem competidores..", icon='🫥')
@@ -59,6 +57,7 @@ with col2:
 
         st.dataframe(
             df.sort_values(by="XP", key=lambda x: x.astype(int), ascending=False),
+            use_container_width= True,
             column_config={
                 "Nome": st.column_config.TextColumn(
                     label="Nome",
