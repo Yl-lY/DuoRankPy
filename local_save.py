@@ -9,8 +9,11 @@ cabecalho = ["Nome", "Avatar", "Display Name", "Bandeira", "Idioma", "XP", "STRE
 def adicionar_na_lista(user, lang):
     data = func.collect_user_data(user)
 
+    if lang == None:
+        return ''
+
     if data == None:
-        print(f'Usuário {user} não encontrado')
+        # print(f'Usuário {user} não encontrado, ou língua')
         return None
     
     display_name = data['fullname']

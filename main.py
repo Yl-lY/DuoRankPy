@@ -16,9 +16,12 @@ linguas = func.collect_languages()
 carregar = save.pegar_competidores()
 competitors = carregar
 
-colleft, coltitle, colright = st.container().columns([3, 8, 3]) 
+colleft, colimage, coltitle, colright = st.container().columns([4.5, 2, 13, 3])
+st.logo('https://images.cults3d.com/h2AL3aObyStbXlc706uekBr1y5c=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/29241666/illustration-file/119d67c6-bbdd-49d5-ab08-c9ad7b049476/You-Missed-your-SPANISH-lesson-Duolingo-2.png', size='large')
+with colimage:
+    st.image('https://pbs.twimg.com/media/FXZhKUUXEAM_BVA.png', use_container_width=True)
 with coltitle:
-    st.title("🏆 Ranking de competidores")
+    st.title("Ranking de competidores")
 
 container = st.container()
 col1, col2, col3, = container.columns([1, 3, 1])
@@ -27,19 +30,19 @@ col1, col2, col3, = container.columns([1, 3, 1])
 
 with col1:
     username = st.text_input('Nome do Participante', label_visibility='collapsed', placeholder='Usuário')
-    lingua = st.selectbox("Qual idioma escolhido?", list(func.bandeiras.keys()))
+    lingua = st.selectbox("Qual idioma escolhido?", list(func.bandeiras.keys()), placeholder='Du iu spiki inglix?', index=None)
 with col3:
     if st.button('Adicionar competidor', icon='➕'):
         sucess = save.adicionar_na_lista(username, lingua)
-        if sucess:
+        if sucess == True:
             st.toast(str(f"{username} Adicionado com sucesso!"), icon='✅')
             save.atualizar_rank()
-            
         elif sucess == None:
-            st.toast(str(f'{username} não é um usuário válido!'), icon='❗️')
-            
-        else:
+            st.toast(str(f'Usuário inválido ou Idioma não selecionado!'), icon='❗️')
+        elif sucess == False:
             st.toast(str(f"{username} já está na lista.."), icon='🤝🏽')
+        elif sucess == '':
+            st.toast('Língua não selecionada!', icon='🧐')
       
 
     if st.button("Atualizar Rank", icon='🌐'):
