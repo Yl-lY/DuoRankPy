@@ -19,4 +19,4 @@ test.py
 *.sql
 
 # Antiga utilização de Banco de Dados
-database.py
+# database.py
