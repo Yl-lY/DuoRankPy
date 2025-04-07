@@ -1,21 +1,24 @@
 import functions as func
 import pandas as pd
 import streamlit as st
-import local_save as save
 
-# save.pegar_competidores()
-
+# Estilização de ícones e imagens da página #
 page_icon = 'https://techcrunch.com/wp-content/uploads/2025/01/duolingo-owl.png'
 
 st.set_page_config(page_title='Duolingo Rank', page_icon=page_icon, layout="wide")
+st.logo('https://images.cults3d.com/h2AL3aObyStbXlc706uekBr1y5c=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/29241666/illustration-file/119d67c6-bbdd-49d5-ab08-c9ad7b049476/You-Missed-your-SPANISH-lesson-Duolingo-2.png', size='large')
+#############################################
 
+# Carregando as línguas oferecidas pelo Duolingo #
 linguas = func.collect_languages()
+##################################################
 
-carregar = save.pegar_competidores()
+#  Puxando os dados do BD  #
+carregar = func.get_competitors()
 competitors = carregar
+############################
 
 colleft, colimage, coltitle, colright = st.container().columns([4.5, 2, 13, 3])
-st.logo('https://images.cults3d.com/h2AL3aObyStbXlc706uekBr1y5c=/516x516/filters:no_upscale()/https://fbi.cults3d.com/uploaders/29241666/illustration-file/119d67c6-bbdd-49d5-ab08-c9ad7b049476/You-Missed-your-SPANISH-lesson-Duolingo-2.png', size='large')
 with colimage:
     st.image('https://pbs.twimg.com/media/FXZhKUUXEAM_BVA.png', use_container_width=True)
 with coltitle:
@@ -29,10 +32,10 @@ with col1:
     lingua = st.selectbox("Qual idioma escolhido?", list(func.bandeiras.keys()), placeholder='Du iu spiki inglix?', index=None)
 with col3:
     if st.button('Adicionar competidor', icon='➕'):
-        sucess = save.adicionar_na_lista(username, lingua)
+        sucess = func.insert_competitor(username, lingua)
         if sucess == True:
             st.toast(str(f"{username} Adicionado com sucesso!"), icon='✅')
-            save.atualizar_rank()
+            func.atualizar_rank()
             st.rerun()
         elif sucess == None:
             st.toast(str(f'{username} não existe!'), icon='❗️')
@@ -44,45 +47,46 @@ with col3:
 
     if st.button("Atualizar Rank", icon='🌐'):
         if competitors != []:
-            save.atualizar_rank()
+            func.atualizar_rank()
             st.rerun()
             st.toast("Lista atualizada!", icon='♻️')
         else:
             st.toast("Lista sem competidores..", icon='🫥')
 
-# competitors = func.get_competitors()
+
 with col2:
     if competitors:
-        df = pd.DataFrame(competitors, columns=save.cabecalho)
+        df = pd.DataFrame(competitors)
 
         st.dataframe(
-            df.sort_values(by="XP", key=lambda x: x.astype(int), ascending=False),
+            data = df.sort_values(by="xp", key=lambda x: x.astype(int), ascending=False),
             use_container_width= True,
             column_config={
-                "Nome": st.column_config.TextColumn(
+                "name": st.column_config.TextColumn(
                     label="Nome",
                     help="Nome de usuário",
+                    disabled=False
                 ),
-                "Avatar": st.column_config.ImageColumn(
+                "avatar": st.column_config.ImageColumn(
                     label="",
                     help="Avatar do usuário",
                     pinned=True,
                     width="small"
                 ),
-                "Display Name": st.column_config.TextColumn(
+                "display_name": st.column_config.TextColumn(
                     label="Nickname",
                     help="Nome exibido",
                 ),
-                "Bandeira": st.column_config.ImageColumn(
+                "flag": st.column_config.ImageColumn(
                     label='',
                     width='small'
                 ),
-                "Idioma": "Idioma",
-                "XP": st.column_config.NumberColumn(
+                "language": "Idioma",
+                "xp": st.column_config.NumberColumn(
                     label="⭐️Experiência",
                     help="Experiência na lingua escolhida"
                 ),
-                "STREAK": "🔥Streak"
+                "streak": "🔥Streak"
             },
             hide_index=True,
         )

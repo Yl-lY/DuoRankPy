@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import requests
 import os
+import database as db
 
 load_dotenv()
 
@@ -54,6 +55,7 @@ bandeiras = {
     }
 
 def get_bandeira(x):
+    # Essa função não tá fazendo nada, mas to com medo de tirar, então vai ficar aqui
     return bandeiras[x]
 
 def collect_languages():
@@ -86,15 +88,57 @@ def collect_user_friends(user_id):
     response = requests.get(f"https://www.duolingo.com/2017-06-30/friends/users/{user_id}/followers?pageSize=500&viewerId={user_id}&_={os.getenv("TLS_TOKEN")}", headers=headers).json()
     return response 
 
-def include_competitor_local():
-    ...
+def insert_competitor(user, lang):
+    data = collect_user_data(user)
 
-def get_competitors_local():
-    competitors = []
-    with open('rank_competidores.csv', 'r') as arquivo:
-        for linha in arquivo:
-            competitors.append(linha)
-    return competitors
-# def rank_competitors(competitors):
+    if data == None:
+        return None
     
-#     return sorted(competitors.items(), key=lambda x: x[1][1], reverse=True)
+    if lang == None:
+        return ''
+
+    display_name = data['fullname']
+    avatar_url = 'https:' + data['avatar'] + '/xlarge'
+    xp = '0'
+    streak = data['site_streak']
+    icon_language = get_bandeira(lang)
+
+    for i in data['languages']:
+        if i['learning'] == False:
+            continue
+        if i['language_string'] == lang:
+            xp = i['points']
+            break
+
+    already_in_list = db.get_competitor(user).data
+
+    if not already_in_list:
+        db.post_competitor({
+            "name" : user,
+            "avatar": avatar_url,
+            "display_name" : display_name,
+            "flag" : icon_language,
+            "language" : lang,
+            "xp" : xp,
+            "streak" : streak
+        })
+
+        return True
+
+    return False
+
+def get_competitors():
+    response = db.get_competitors().data
+    return response
+
+def atualizar_rank():
+    competitors = get_competitors()
+    for competitor in competitors:
+        data = collect_user_data(competitor['name'])
+        for i in data['languages']:
+            if i['language_string'] == competitor['language']:
+                competitor['xp'] = int(i['points'])
+                competitor['streak'] = int(data['last_streak']['length'])
+
+    for competitor in competitors:
+        db.update_competitor(competitor)
