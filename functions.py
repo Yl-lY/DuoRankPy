@@ -139,6 +139,8 @@ def atualizar_rank():
             if i['language_string'] == competitor['language']:
                 competitor['xp'] = int(i['points'])
                 competitor['streak'] = int(data['last_streak']['length'])
+        if (competitor['avatar'] != 'https:' + data['avatar'] + '/xlarge'):
+            competitor['avatar'] = 'https:' + data['avatar'] + '/xlarge'
 
     for competitor in competitors:
         db.update_competitor(competitor)
